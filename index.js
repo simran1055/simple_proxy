@@ -62,6 +62,16 @@ app.all('/proxy', async (req, res) => {
     }
 });
 
-exports.api = functions.https.onRequest(app);
+const options = {
+    key: fs.readFileSync("server.key"),
+    cert: fs.readFileSync("server.cert"),
+};
+
+https.createServer(options, app)
+    .listen(3000, function (req, res) {
+        console.log("Server started at port 3000");
+    });
+
+// exports.api = functions.https.onRequest(app);
 
 // app.listen(3000, ()=>{})
