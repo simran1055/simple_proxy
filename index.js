@@ -15,28 +15,12 @@ app.all('/proxy', async (req, res) => {
     }
 
     try {
-        let headers = {
-            "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
-            "accept-language": "en-US,en;q=0.9",
-            "cache-control": "no-cache",
-            "pragma": "no-cache",
-            "priority": "u=0, i",
-            "sec-ch-ua": "\"Chromium\";v=\"128\", \"Not;A=Brand\";v=\"24\", \"Google Chrome\";v=\"128\"",
-            "sec-ch-ua-mobile": "?0",
-            "sec-ch-ua-platform": "\"macOS\"",
-            "sec-fetch-dest": "document",
-            "sec-fetch-mode": "navigate",
-            "sec-fetch-site": "none",
-            "sec-fetch-user": "?1",
-            "upgrade-insecure-requests": "1"
-        };
 
         // Use axios to fetch the image
         const response = await axios({
             url: targetUrl,
             method: 'GET',
             responseType: 'stream',
-            headers: headers
         });
 
         // Pipe the image data directly to the response
@@ -64,16 +48,16 @@ app.all('/proxy', async (req, res) => {
     }
 });
 
-const options = {
-    key: fs.readFileSync("server.key"),
-    cert: fs.readFileSync("server.cert"),
-};
+// const options = {
+//     key: fs.readFileSync("server.key"),
+//     cert: fs.readFileSync("server.cert"),
+// };
 
 // For Firebase Functions
 // exports.api = functions.https.onRequest(app);
-
+app.listen(3000);
 // For local testing
-https.createServer(options, app)
-    .listen(3000, function (req, res) {
-       console.log("Server started at port 3000");
-   });
+// https.createServer(options, app)
+//     .listen(3000, function (req, res) {
+//        console.log("Server started at port 3000");
+//    });
